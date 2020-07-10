@@ -47,14 +47,14 @@ class GoSwagger < Formula
   option "with-goswagger", "Names the binary goswagger instead of swagger"
 
   def install
-    resource("sha_text").stage { bin.install "sha256.txt" }
-    File.open("sha256sum.txt", "r") do |file|
-      file.each_line do |line|
-        line_data = line.split(" ")
-        puts line_data
-        @@sha256Map[line_data[1]] = line_data[0]
-      end
-    end
+    # resource("sha_text").stage { bin.install "sha256.txt" }
+    # File.open("sha256sum.txt", "r") do |file|
+    #   file.each_line do |line|
+    #     line_data = line.split(" ")
+    #     puts line_data
+    #     @@sha256Map[line_data[1]] = line_data[0]
+    #   end
+    # end
     nm = "swagger"
     if build.with? "goswagger"
       nm = "goswagger"
