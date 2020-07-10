@@ -10,13 +10,6 @@ class GoSwagger < Formula
   resource "sha_text" do
     url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/sha256sum.txt"
     sha256 "78f953f7b60aaeadcbeb7f51a544c97d0e9246f9c7764870a2adae84ef4d9c5b"
-
-    File.open("sha256sum.txt", "r") do |file|
-      file.each_line do |line|
-        line_data = line.split(",")
-        @@sha256Map[line_data[1]] = line_data[0]
-      end
-    end
   end
 
   if OS.mac?
@@ -52,8 +45,15 @@ class GoSwagger < Formula
   sha256 sha256Map[@@filename]
 
   option "with-goswagger", "Names the binary goswagger instead of swagger"
+  resource("sha_text").stage { bin.install "sha256.txt" }
 
   def install
+    File.open("sha256sum.txt", "r") do |file|
+      file.each_line do |line|
+        line_data = line.split(",")
+        @@sha256Map[line_data[1]] = line_data[0]
+      end
+    end
     nm = "swagger"
     if build.with? "goswagger"
       nm = "goswagger"
