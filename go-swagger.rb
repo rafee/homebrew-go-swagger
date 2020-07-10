@@ -42,7 +42,7 @@ class GoSwagger < Formula
 
   @@filename = "swagger_#{@@os}_#{@@arch}"
   url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/#{@@filename}"
-  sha256 sha256Map[@@filename]
+  sha256 @@sha256Map[@@filename]
 
   option "with-goswagger", "Names the binary goswagger instead of swagger"
   resource("sha_text").stage { bin.install "sha256.txt" }
