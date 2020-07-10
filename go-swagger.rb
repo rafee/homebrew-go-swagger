@@ -1,7 +1,8 @@
 class GoSwagger < Formula
   desc "Toolkit to work with swagger for golang"
   homepage "https://github.com/go-swagger/go-swagger"
-  version "0.24.0"
+  @@version = "0.24.0"
+  version @@version
   @@os = nil
   @@arch = nil
   # @@sha = nil
@@ -41,7 +42,7 @@ class GoSwagger < Formula
   end
 
   @@filename = "swagger_#{@@os}_#{@@arch}"
-  url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/#{@@filename}"
+  url "https://github.com/go-swagger/go-swagger/releases/download/v#{@@version}/#{@@filename}"
   sha256 @@sha256Map[@@filename]
 
   option "with-goswagger", "Names the binary goswagger instead of swagger"
