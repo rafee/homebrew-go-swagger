@@ -10,7 +10,7 @@ class GoSwagger < Formula
 
   resource "sha_text" do
     url "https://github.com/go-swagger/go-swagger/releases/download/v#{@@version}/sha256sum.txt"
-    sha256 "78f953f7b60aaeadcbeb7f51a544c97d0e9246f9c7764870a2adae84ef4d9c5b"
+    sha256 "0e879d6399c3ab01b0adc8640e9b98e980d6acba45731642790c0873af4b3eab"
   end
 
   if OS.mac?
