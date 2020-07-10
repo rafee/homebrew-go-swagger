@@ -5,17 +5,17 @@ class GoSwagger < Formula
   @@os = nil
   @@arch = nil
   # @@sha = nil
+  @@sha256Map = {}
 
   resource "sha_text" do
     url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/sha256sum.txt"
     sha256 "78f953f7b60aaeadcbeb7f51a544c97d0e9246f9c7764870a2adae84ef4d9c5b"
-  end
 
-  sha256Map = {}
-  File.open("sha256sum.txt", "r") do |file|
-    file.each_line do |line|
-      line_data = line.split(",")
-      sha256Map[line_data[1]] = line_data[0]
+    File.open("sha256sum.txt", "r") do |file|
+      file.each_line do |line|
+        line_data = line.split(",")
+        @@sha256Map[line_data[1]] = line_data[0]
+      end
     end
   end
 
