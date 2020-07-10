@@ -8,7 +8,7 @@ class GoSwagger < Formula
   @@sha256Map = {}
 
   resource "sha_text" do
-    url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/sha256sum.txt"
+    url "https://github.com/go-swagger/go-swagger/releases/download/v#{@@version}/sha256sum.txt"
     sha256 "78f953f7b60aaeadcbeb7f51a544c97d0e9246f9c7764870a2adae84ef4d9c5b"
   end
 
