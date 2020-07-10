@@ -51,6 +51,7 @@ class GoSwagger < Formula
     File.open("sha256sum.txt", "r") do |file|
       file.each_line do |line|
         line_data = line.split(" ")
+        puts line_data
         @@sha256Map[line_data[1]] = line_data[0]
       end
     end
