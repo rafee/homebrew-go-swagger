@@ -45,9 +45,9 @@ class GoSwagger < Formula
   sha256 @@sha256Map[@@filename]
 
   option "with-goswagger", "Names the binary goswagger instead of swagger"
-  resource("sha_text").stage { bin.install "sha256.txt" }
 
   def install
+    resource("sha_text").stage { bin.install "sha256.txt" }
     File.open("sha256sum.txt", "r") do |file|
       file.each_line do |line|
         line_data = line.split(",")
