@@ -2,25 +2,54 @@ class GoSwagger < Formula
   desc "Toolkit to work with swagger for golang"
   homepage "https://github.com/go-swagger/go-swagger"
   version "0.24.0"
-  @@filename = nil
-  if OS.mac?
-    @@filename = "swagger_darwin_amd64"
-    url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/#{@@filename}"
-    sha256 "2860ae8cc9fc881bd7b2aeb2ba78da5c7abf7e6e40b5d1bfbf7baa582a70430c"
-  elsif OS.linux?
-    case RbConfig::CONFIG["host_cpu"]
-    when "aarch64"
-      @@filename = "swagger_linux_arm64"
-      url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/#{@@filename}"
-      sha256 "226d8038e9949abaa3322330ed8c9b2991fcc0d362c4f4a00a63107acaac0d7c"
-    when "x86_64"
-      @@filename = "swagger_linux_amd64"
-      url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/#{@@filename}"
-      sha256 "50698cc3524e46c805a0a909bb417eaf84cc456dfb162dc2b4e5c6b0d7f6a508"
-    else
-      ohdie "Architecture not supported by this forumla"
+  @@os = nil
+  @@arch = nil
+  # @@sha = nil
+
+  resource "sha_text" do
+    url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/sha256sum.txt"
+    sha256 "78f953f7b60aaeadcbeb7f51a544c97d0e9246f9c7764870a2adae84ef4d9c5b"
+  end
+
+  sha256Map = {}
+  File.open("sha256sum.txt", "r") do |file|
+    file.each_line do |line|
+      line_data = line.split(",")
+      sha256Map[line_data[1]] = line_data[0]
     end
   end
+
+  if OS.mac?
+    @@os = "darwin"
+    case RbConfig::CONFIG["host_cpu"]
+    when "i386"
+      @@arch = "386"
+    when "x86_64"
+      @@arch = "amd64"
+    else
+      ohdie "This architecture isn't officially supported by this formula. If this is supported by golang, feel free to visit our repo and compile from source"
+    end
+  elsif OS.linux?
+    @@os = "linux"
+    case RbConfig::CONFIG["host_cpu"]
+    when "arm"
+      @@arch = "arm"
+    when "aarch64"
+      @@arch = "arm64"
+    when "x86_64"
+      @@arch = "amd64"
+    when "i386"
+      @@arch = "386"
+    else
+      ohdie "This architecture isn't officially supported by this formula. If this is supported by golang, feel free to visit our repo and compile from source"
+    end
+  else
+    ohdie "This operating system isn't officially supported by this formula. If this is supported by golang, feel free to visit our repo and compile from source"
+  end
+
+  @@filename = "swagger_#{@@os}_#{@@arch}"
+  url "https://github.com/go-swagger/go-swagger/releases/download/v#{version}/#{@@filename}"
+  sha256 sha256Map[@@filename]
 
   option "with-goswagger", "Names the binary goswagger instead of swagger"
 
